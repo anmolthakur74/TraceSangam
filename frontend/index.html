@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AgriTrace System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
+    <h1 class="text-3xl font-bold text-center text-green-700 mb-6">🌾 AgriTrace System</h1>
+
+    <form id="addProductForm" class="space-y-4">
+      <h2 class="text-xl font-semibold mb-2">Add New Product</h2>
+      <input type="text" id="farmerName" placeholder="Farmer Name" required class="w-full border px-3 py-2 rounded" />
+      <input type="text" id="crop" placeholder="Crop" required class="w-full border px-3 py-2 rounded" />
+      <input type="text" id="location" placeholder="Location" required class="w-full border px-3 py-2 rounded" />
+      <input type="date" id="date" required class="w-full border px-3 py-2 rounded" />
+      <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Add Product</button>
+    </form>
+
+    <div class="mt-10">
+      <h2 class="text-xl font-semibold mb-2">🔍 Trace Product</h2>
+      <input type="text" id="traceId" placeholder="Enter Batch ID..." class="w-full border px-3 py-2 rounded" />
+      <button onclick="traceProduct()" class="w-full bg-blue-600 text-white py-2 mt-2 rounded hover:bg-blue-700">Get Trace</button>
+
+      <div id="traceResult" class="mt-4 p-4 bg-gray-50 border rounded"></div>
+    </div>
+  </div>
+
+  <script>
+    // Add Product
+    document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        farmerName: document.getElementById('farmerName').value,
+        crop: document.getElementById('crop').value,
+        location: document.getElementById('location').value,
+        date: document.getElementById('date').value
+      };
+
+      const res = await fetch('http://localhost:3001/addProduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert(`✅ Product added!\nBatch ID: ${data.batchId}`);
+        document.getElementById('addProductForm').reset();
+      } else {
+        alert(`❌ Error: ${data.error}`);
+      }
+    });
+
+    // Trace Product
+    async function traceProduct() {
+      const batchId = document.getElementById('traceId').value.trim();
+      const result = document.getElementById('traceResult');
+      result.innerHTML = "⏳ Searching...";
+
+      const res = await fetch(`http://localhost:3001/getTrace/${batchId}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        result.innerHTML = `
+          <p><strong>Batch ID:</strong> ${data.batchId}</p>
+          <p><strong>Farmer Name:</strong> ${data.farmerName}</p>
+          <p><strong>Crop:</strong> ${data.crop}</p>
+          <p><strong>Location:</strong> ${data.location}</p>
+          <p><strong>Date:</strong> ${data.date}</p>
+          <p><strong>Timestamp:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+        `;
+      } else {
+        result.innerHTML = `<span class="text-red-600">❌ ${data.error}</span>`;
+      }
+    }
+  </script>
+</body>
+</html>

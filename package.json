@@ -1,9 +1,9 @@
 {
   "name": "agritrace-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/index.js",     // ← set correct path here
   "scripts": {
-    "start": "node index.js"
+    "start": "node backend/index.js"   // ← also fix script
   },
   "dependencies": {
     "body-parser": "^2.2.0",

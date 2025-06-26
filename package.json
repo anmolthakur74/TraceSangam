@@ -1,9 +1,9 @@
 {
   "name": "agritrace-app",
   "version": "1.0.0",
-  "main": "backend/index.js",    
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node backend/index.js"  
+    "start": "node backend/index.js"
   },
   "dependencies": {
     "body-parser": "^2.2.0",

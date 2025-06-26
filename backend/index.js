@@ -3,12 +3,17 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;  
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, 'frontend'))); 
+
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
 
 // Test route
 app.get('/test', (req, res) => {

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import Dashboard from "./components/Dashboard"; 
-import ShipmentsPage from './pages/ShipmentsPage'; 
+import ShipmentsPage from './components/ShipmentsPage'; 
 export default function App() {
   return (
     <Router>

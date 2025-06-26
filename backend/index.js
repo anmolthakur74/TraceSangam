@@ -3,16 +3,33 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-const PORT = process.env.PORT || 3001;  
+const PORT = process.env.PORT || 3001;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'frontend'))); 
+app.use(express.static(path.join(__dirname, 'frontend')));
 
-
+// Serve main HTML page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
+
+// ✅ Get all products (NEW)
+app.get('/getAllProducts', (req, res) => {
+  try {
+    let products = [];
+    if (fs.existsSync(DATA_FILE)) {
+      const data = fs.readFileSync(DATA_FILE, 'utf8');
+      products = data.length ? JSON.parse(data) : [];
+    }
+    return res.json(products);
+  } catch (err) {
+    return res.status(500).json({
+      error: 'Failed to load products',
+      message: err.message
+    });
+  }
 });
 
 // Test route
@@ -24,6 +41,7 @@ app.get('/test', (req, res) => {
 // Add product
 app.post('/addProduct', async (req, res) => {
   console.time("AddProduct");
+
   const { farmerName, crop, location, date } = req.body;
 
   if (!farmerName || !crop || !location || !date) {
@@ -63,10 +81,11 @@ app.post('/addProduct', async (req, res) => {
       message: err.message
     });
   }
+
   console.timeEnd("AddProduct");
 });
 
-// Get product trace
+// Get trace by batchId
 app.get('/getTrace/:batchId', (req, res) => {
   console.time("GetTrace");
   const batchId = req.params.batchId;

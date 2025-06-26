@@ -1,22 +1,24 @@
 const express = require('express');
-const QRCode = require('qrcode');
 const fs = require('fs');
 const path = require('path');
-
 const app = express();
+
 const PORT = 3001;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
+// Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'frontend')));
 
+// Test route
 app.get('/test', (req, res) => {
   console.log("/test route working");
   res.send("Test route working!");
 });
-console.time("AddProduct");
-app.post('/addProduct', async (req, res) => {
-  console.log("Product added");
 
+// Add product
+app.post('/addProduct', async (req, res) => {
+  console.time("AddProduct");
   const { farmerName, crop, location, date } = req.body;
 
   if (!farmerName || !crop || !location || !date) {
@@ -25,8 +27,6 @@ app.post('/addProduct', async (req, res) => {
   }
 
   const batchId = Math.random().toString(36).substring(2, 10);
-  console.log("Batch ID:", batchId);
-
   const newProduct = {
     batchId,
     farmerName,
@@ -37,7 +37,6 @@ app.post('/addProduct', async (req, res) => {
   };
 
   try {
-    // Load existing products
     let products = [];
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE);
@@ -46,7 +45,6 @@ app.post('/addProduct', async (req, res) => {
 
     products.push(newProduct);
     fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2));
-
     console.log("Product saved");
 
     res.status(201).json({
@@ -60,23 +58,22 @@ app.post('/addProduct', async (req, res) => {
       message: err.message
     });
   }
+  console.timeEnd("AddProduct");
 });
 
+// Get product trace
 app.get('/getTrace/:batchId', (req, res) => {
   console.time("GetTrace");
-
   const batchId = req.params.batchId;
-  console.log("🔍 GET trace for:", batchId);
 
   try {
     let products = [];
     if (fs.existsSync(DATA_FILE)) {
-      const data = fs.readFileSync(DATA_FILE, 'utf8'); // <- force UTF-8 read
+      const data = fs.readFileSync(DATA_FILE, 'utf8');
       products = data.length ? JSON.parse(data) : [];
     }
 
     const product = products.find(p => p.batchId === batchId);
-
     console.timeEnd("GetTrace");
 
     if (!product) {
@@ -90,6 +87,7 @@ app.get('/getTrace/:batchId', (req, res) => {
   }
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

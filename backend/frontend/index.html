@@ -1,122 +1,165 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100 text-gray-800">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AgriTrace Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex h-screen">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shipments Dashboard - AgriTrace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png"/>
+  </head>
+  <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+    <!-- Sidebar -->
+    <aside class="w-60 bg-white border-r p-4 flex flex-col justify-between">
+      <div>
+        <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
+        <nav class="space-y-4">
+          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+            <span>🏠</span> Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+            <span>📦</span> Products
+          </a>
+          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+            <span>🔎</span> QR/Barcode Lookup
+          </a>
+          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+            <span>⚠️</span> Alerts / Tamper Events
+          </a>
+        </nav>
+      </div>
+    </aside>
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-md p-4 flex flex-col gap-6">
-    <h1 class="text-2xl font-bold text-blue-600">AgriTrace</h1>
-    <nav class="flex flex-col gap-4 text-gray-700">
-      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
-        <span>📊</span> Dashboard
-      </a>
-      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
-        <span>📦</span> Products
-      </a>
-      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
-        <span>🔍</span> QR/Barcode Lookup
-      </a>
-      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
-        <span>⚠️</span> Alerts
-      </a>
-    </nav>
-  </aside>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+      <!-- Top Navbar -->
+      <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
+        <div class="flex gap-6 text-sm font-medium text-gray-600">
+          <a href="#" class="text-blue-600">Shipments</a>
+          <a href="#">Export Logs</a>
+          <a href="#">Compliance</a>
+          <a href="#">Settings</a>
+        </div>
+        <div>
+          <span class="text-gray-400 text-xl">🔔</span>
+        </div>
+      </div>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 overflow-auto">
-    <header class="flex items-center justify-between mb-6">
-      <h2 class="text-xl font-semibold">Shipments Management</h2>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Export</button>
-    </header>
+      <!-- Page Content -->
+      <div class="p-6 space-y-6">
+        <h2 class="text-xl font-semibold">Shipments Management</h2>
 
-    <!-- Filter/Search -->
-    <div class="flex gap-4 mb-4">
-      <input type="text" placeholder="Search shipments..." class="border border-gray-300 px-3 py-2 rounded w-full" />
-      <select class="border border-gray-300 px-2 py-2 rounded">
-        <option>All Status</option>
-        <option>At Port</option>
-        <option>In Transit</option>
-        <option>Delivered</option>
-      </select>
-      <select class="border border-gray-300 px-2 py-2 rounded">
-        <option>All Compliance</option>
-        <option>Compliant</option>
-        <option>Non-Compliant</option>
-      </select>
-    </div>
+        <!-- Filters -->
+        <div class="flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Search shipments..."
+            class="flex-1 px-3 py-2 border rounded-md border-gray-300"
+          />
+          <select class="px-2 py-2 border rounded-md border-gray-300">
+            <option>All Status</option>
+            <option>At Port</option>
+            <option>In Transit</option>
+            <option>Delivered</option>
+          </select>
+          <select class="px-2 py-2 border rounded-md border-gray-300">
+            <option>All Compliance</option>
+            <option>Compliant</option>
+            <option>Non-Compliant</option>
+          </select>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            ⬇ Export
+          </button>
+        </div>
 
-    <!-- Table -->
-    <div class="bg-white rounded-lg shadow overflow-x-auto">
-      <table class="w-full text-left text-sm">
-        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
-          <tr>
-            <th class="p-3">Shipment ID</th>
-            <th class="p-3">Product</th>
-            <th class="p-3">Origin → Destination</th>
-            <th class="p-3">Status</th>
-            <th class="p-3">Compliance</th>
-            <th class="p-3">ETA</th>
-            <th class="p-3">Value</th>
-            <th class="p-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="shipmentTableBody">
-          <!-- Rows injected by script.js -->
-        </tbody>
-      </table>
-    </div>
-  </main>
+        <!-- Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+          <table class="min-w-full text-sm text-left">
+            <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
+              <tr>
+                <th class="px-6 py-3">Shipment ID</th>
+                <th class="px-6 py-3">Product</th>
+                <th class="px-6 py-3">Origin → Destination</th>
+                <th class="px-6 py-3">Status</th>
+                <th class="px-6 py-3">Compliance</th>
+                <th class="px-6 py-3">ETA</th>
+                <th class="px-6 py-3">Value</th>
+                <th class="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700" id="shipmentTableBody">
+              <!-- Data rows will go here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
 
-  <script>
-    // Example rows (later you can fetch from /getTrace endpoint)
-    const shipments = [
-      {
-        id: 'BX001',
-        product: 'Organic Basmati Rice',
-        quantity: '25 tons',
-        from: 'Nashik, India',
-        to: 'Hamburg, Germany',
-        status: 'At Port',
-        compliance: 'Compliant',
-        eta: '2024-01-15',
-        value: '$45,000'
-      },
-      {
-        id: 'BX002',
-        product: 'Alphonso Mangoes',
-        quantity: '15 tons',
-        from: 'Ratnagiri, India',
-        to: 'Rotterdam, Netherlands',
-        status: 'In Transit',
-        compliance: 'Compliant',
-        eta: '2024-01-18',
-        value: '$32,000'
-      }
-    ];
+    <script>
+      // Example: Replace with backend data later
+      const shipments = [
+        {
+          id: "BX001",
+          product: "Organic Basmati Rice",
+          quantity: "25 tons",
+          origin: "Nashik, India",
+          destination: "Hamburg, Germany",
+          status: "At Port",
+          compliance: "Compliant",
+          eta: "2024-01-15",
+          value: "$45,000"
+        },
+        {
+          id: "BX002",
+          product: "Alphonso Mangoes",
+          quantity: "15 tons",
+          origin: "Ratnagiri, India",
+          destination: "Rotterdam, Netherlands",
+          status: "In Transit",
+          compliance: "Compliant",
+          eta: "2024-01-18",
+          value: "$32,000"
+        },
+        {
+          id: "BX003",
+          product: "Darjeeling Tea",
+          quantity: "5 tons",
+          origin: "Darjeeling, India",
+          destination: "London, UK",
+          status: "Delivered",
+          compliance: "Compliant",
+          eta: "2024-01-10",
+          value: "$28,000"
+        }
+      ];
 
-    const tbody = document.getElementById('shipmentTableBody');
-    shipments.forEach(s => {
-      tbody.innerHTML += `
-        <tr class="border-t">
-          <td class="p-3 font-medium">${s.id}</td>
-          <td class="p-3">${s.product}<br><span class="text-gray-500 text-xs">${s.quantity}</span></td>
-          <td class="p-3">${s.from} → ${s.to}</td>
-          <td class="p-3"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">${s.status}</span></td>
-          <td class="p-3"><span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">${s.compliance}</span></td>
-          <td class="p-3">${s.eta}</td>
-          <td class="p-3">${s.value}</td>
-          <td class="p-3 flex gap-2">
-            <button class="text-blue-600 hover:text-blue-800">👁️</button>
-            <button class="text-gray-600 hover:text-gray-800">⬇️</button>
-          </td>
-        </tr>`;
-    });
-  </script>
+      const table = document.getElementById("shipmentTableBody");
 
-</body>
+      shipments.forEach(s => {
+        const statusColor = s.status === "Delivered"
+          ? "bg-green-100 text-green-800"
+          : s.status === "In Transit"
+          ? "bg-blue-100 text-blue-800"
+          : "bg-yellow-100 text-yellow-800";
+
+        table.innerHTML += `
+          <tr class="border-t">
+            <td class="px-6 py-3 font-medium">${s.id}</td>
+            <td class="px-6 py-3">${s.product}<br/><span class="text-xs text-gray-500">${s.quantity}</span></td>
+            <td class="px-6 py-3">${s.origin} → ${s.destination}</td>
+            <td class="px-6 py-3">
+              <span class="text-xs px-2 py-1 rounded ${statusColor}">${s.status}</span>
+            </td>
+            <td class="px-6 py-3">
+              <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">${s.compliance}</span>
+            </td>
+            <td class="px-6 py-3">${s.eta}</td>
+            <td class="px-6 py-3">${s.value}</td>
+            <td class="px-6 py-3 space-x-2">
+              <button title="View" class="hover:text-blue-600">👁️</button>
+              <button title="Download" class="hover:text-gray-700">⬇️</button>
+            </td>
+          </tr>`;
+      });
+    </script>
+  </body>
 </html>

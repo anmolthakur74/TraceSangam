@@ -2,16 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Shipments Dashboard - AgriTrace</title>
+    <title>Shipments Dashboard - TraceSangam</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png"/>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
   </head>
+
   <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
     <!-- Sidebar -->
     <aside class="w-60 bg-white border-r p-4 flex flex-col justify-between">
       <div>
-        <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
+        <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 AgriTrace</h1>
         <nav class="space-y-4">
           <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
             <span>🏠</span> Dashboard
@@ -20,10 +21,10 @@
             <span>📦</span> Products
           </a>
           <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>🔎</span> QR/Barcode Lookup
+            <span>🔎</span> QR Lookup
           </a>
           <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>⚠️</span> Alerts / Tamper Events
+            <span>⚠️</span> Alerts
           </a>
         </nav>
       </div>
@@ -87,79 +88,74 @@
               </tr>
             </thead>
             <tbody class="text-gray-700" id="shipmentTableBody">
-              <!-- Data rows will go here -->
+              <!-- Data rows will be inserted by JS -->
             </tbody>
           </table>
         </div>
       </div>
     </main>
 
+    <!-- Script to fetch and display shipments -->
     <script>
-      // Example: Replace with backend data later
-      const shipments = [
-        {
-          id: "BX001",
-          product: "Organic Basmati Rice",
-          quantity: "25 tons",
-          origin: "Nashik, India",
-          destination: "Hamburg, Germany",
-          status: "At Port",
-          compliance: "Compliant",
-          eta: "2024-01-15",
-          value: "$45,000"
-        },
-        {
-          id: "BX002",
-          product: "Alphonso Mangoes",
-          quantity: "15 tons",
-          origin: "Ratnagiri, India",
-          destination: "Rotterdam, Netherlands",
-          status: "In Transit",
-          compliance: "Compliant",
-          eta: "2024-01-18",
-          value: "$32,000"
-        },
-        {
-          id: "BX003",
-          product: "Darjeeling Tea",
-          quantity: "5 tons",
-          origin: "Darjeeling, India",
-          destination: "London, UK",
-          status: "Delivered",
-          compliance: "Compliant",
-          eta: "2024-01-10",
-          value: "$28,000"
+      async function loadShipments() {
+        try {
+          const res = await fetch('/getAllProducts');
+          const shipments = await res.json();
+
+          const table = document.getElementById("shipmentTableBody");
+          table.innerHTML = "";
+
+          shipments.forEach(s => {
+            const status = "In Transit"; // Temporary logic
+            const value = "$" + (Math.floor(Math.random() * 20000) + 10000);
+            const eta = new Date(new Date(s.date).getTime() + 7 * 86400000).toISOString().split('T')[0];
+
+            const statusColor = status === "Delivered"
+              ? "bg-green-100 text-green-800"
+              : status === "In Transit"
+              ? "bg-blue-100 text-blue-800"
+              : "bg-yellow-100 text-yellow-800";
+
+            table.innerHTML += `
+              <tr class="border-t">
+                <td class="px-6 py-3 font-medium">${s.batchId}</td>
+                <td class="px-6 py-3">${s.crop}<br/><span class="text-xs text-gray-500">10 tons</span></td>
+                <td class="px-6 py-3">${s.location} → Rotterdam, Netherlands</td>
+                <td class="px-6 py-3">
+                  <span class="text-xs px-2 py-1 rounded ${statusColor}">${status}</span>
+                </td>
+                <td class="px-6 py-3">
+                  <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">Compliant</span>
+                </td>
+                <td class="px-6 py-3">${eta}</td>
+                <td class="px-6 py-3">${value}</td>
+                <td class="px-6 py-3 space-x-2">
+                  <button onclick="viewShipment('${s.batchId}')" title="View" class="hover:text-blue-600">👁️</button>
+                  <button onclick="downloadQR('${s.batchId}')" title="Download QR" class="hover:text-gray-700">⬇️</button>
+                </td>
+              </tr>`;
+          });
+        } catch (err) {
+          console.error("❌ Failed to load shipments:", err);
         }
-      ];
+      }
 
-      const table = document.getElementById("shipmentTableBody");
+      async function viewShipment(batchId) {
+        const res = await fetch(`/getTrace/${batchId}`);
+        const data = await res.json();
+        alert(`📦 Batch ID: ${data.batchId}\nCrop: ${data.crop}\nFarmer: ${data.farmerName}\nLocation: ${data.location}`);
+      }
 
-      shipments.forEach(s => {
-        const statusColor = s.status === "Delivered"
-          ? "bg-green-100 text-green-800"
-          : s.status === "In Transit"
-          ? "bg-blue-100 text-blue-800"
-          : "bg-yellow-100 text-yellow-800";
+      async function downloadQR(batchId) {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${batchId}&size=150x150`;
+        const a = document.createElement('a');
+        a.href = qrUrl;
+        a.download = `${batchId}_QR.png`;
+        a.click();
+      }
 
-        table.innerHTML += `
-          <tr class="border-t">
-            <td class="px-6 py-3 font-medium">${s.id}</td>
-            <td class="px-6 py-3">${s.product}<br/><span class="text-xs text-gray-500">${s.quantity}</span></td>
-            <td class="px-6 py-3">${s.origin} → ${s.destination}</td>
-            <td class="px-6 py-3">
-              <span class="text-xs px-2 py-1 rounded ${statusColor}">${s.status}</span>
-            </td>
-            <td class="px-6 py-3">
-              <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">${s.compliance}</span>
-            </td>
-            <td class="px-6 py-3">${s.eta}</td>
-            <td class="px-6 py-3">${s.value}</td>
-            <td class="px-6 py-3 space-x-2">
-              <button title="View" class="hover:text-blue-600">👁️</button>
-              <button title="Download" class="hover:text-gray-700">⬇️</button>
-            </td>
-          </tr>`;
-      });
+      // Load shipments on page load
+      loadShipments();
     </script>
   </body>
 </html>

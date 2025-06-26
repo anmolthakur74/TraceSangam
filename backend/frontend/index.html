@@ -1,82 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100 text-gray-800">
 <head>
   <meta charset="UTF-8" />
-  <title>AgriTrace System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriTrace Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans">
-  <div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
-    <h1 class="text-3xl font-bold text-center text-green-700 mb-6">🌾 AgriTrace System</h1>
+<body class="flex h-screen">
 
-    <form id="addProductForm" class="space-y-4">
-      <h2 class="text-xl font-semibold mb-2">Add New Product</h2>
-      <input type="text" id="farmerName" placeholder="Farmer Name" required class="w-full border px-3 py-2 rounded" />
-      <input type="text" id="crop" placeholder="Crop" required class="w-full border px-3 py-2 rounded" />
-      <input type="text" id="location" placeholder="Location" required class="w-full border px-3 py-2 rounded" />
-      <input type="date" id="date" required class="w-full border px-3 py-2 rounded" />
-      <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Add Product</button>
-    </form>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md p-4 flex flex-col gap-6">
+    <h1 class="text-2xl font-bold text-blue-600">AgriTrace</h1>
+    <nav class="flex flex-col gap-4 text-gray-700">
+      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
+        <span>📦</span> Products
+      </a>
+      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
+        <span>🔍</span> QR/Barcode Lookup
+      </a>
+      <a href="#" class="flex items-center gap-2 hover:text-blue-500">
+        <span>⚠️</span> Alerts
+      </a>
+    </nav>
+  </aside>
 
-    <div class="mt-10">
-      <h2 class="text-xl font-semibold mb-2">🔍 Trace Product</h2>
-      <input type="text" id="traceId" placeholder="Enter Batch ID..." class="w-full border px-3 py-2 rounded" />
-      <button onclick="traceProduct()" class="w-full bg-blue-600 text-white py-2 mt-2 rounded hover:bg-blue-700">Get Trace</button>
+  <!-- Main Content -->
+  <main class="flex-1 p-6 overflow-auto">
+    <header class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-semibold">Shipments Management</h2>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Export</button>
+    </header>
 
-      <div id="traceResult" class="mt-4 p-4 bg-gray-50 border rounded"></div>
+    <!-- Filter/Search -->
+    <div class="flex gap-4 mb-4">
+      <input type="text" placeholder="Search shipments..." class="border border-gray-300 px-3 py-2 rounded w-full" />
+      <select class="border border-gray-300 px-2 py-2 rounded">
+        <option>All Status</option>
+        <option>At Port</option>
+        <option>In Transit</option>
+        <option>Delivered</option>
+      </select>
+      <select class="border border-gray-300 px-2 py-2 rounded">
+        <option>All Compliance</option>
+        <option>Compliant</option>
+        <option>Non-Compliant</option>
+      </select>
     </div>
-  </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="p-3">Shipment ID</th>
+            <th class="p-3">Product</th>
+            <th class="p-3">Origin → Destination</th>
+            <th class="p-3">Status</th>
+            <th class="p-3">Compliance</th>
+            <th class="p-3">ETA</th>
+            <th class="p-3">Value</th>
+            <th class="p-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="shipmentTableBody">
+          <!-- Rows injected by script.js -->
+        </tbody>
+      </table>
+    </div>
+  </main>
 
   <script>
-    // Add Product
-    document.getElementById('addProductForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const payload = {
-        farmerName: document.getElementById('farmerName').value,
-        crop: document.getElementById('crop').value,
-        location: document.getElementById('location').value,
-        date: document.getElementById('date').value
-      };
-
-      const res = await fetch('http://localhost:3001/addProduct', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert(`✅ Product added!\nBatch ID: ${data.batchId}`);
-        document.getElementById('addProductForm').reset();
-      } else {
-        alert(`❌ Error: ${data.error}`);
+    // Example rows (later you can fetch from /getTrace endpoint)
+    const shipments = [
+      {
+        id: 'BX001',
+        product: 'Organic Basmati Rice',
+        quantity: '25 tons',
+        from: 'Nashik, India',
+        to: 'Hamburg, Germany',
+        status: 'At Port',
+        compliance: 'Compliant',
+        eta: '2024-01-15',
+        value: '$45,000'
+      },
+      {
+        id: 'BX002',
+        product: 'Alphonso Mangoes',
+        quantity: '15 tons',
+        from: 'Ratnagiri, India',
+        to: 'Rotterdam, Netherlands',
+        status: 'In Transit',
+        compliance: 'Compliant',
+        eta: '2024-01-18',
+        value: '$32,000'
       }
+    ];
+
+    const tbody = document.getElementById('shipmentTableBody');
+    shipments.forEach(s => {
+      tbody.innerHTML += `
+        <tr class="border-t">
+          <td class="p-3 font-medium">${s.id}</td>
+          <td class="p-3">${s.product}<br><span class="text-gray-500 text-xs">${s.quantity}</span></td>
+          <td class="p-3">${s.from} → ${s.to}</td>
+          <td class="p-3"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">${s.status}</span></td>
+          <td class="p-3"><span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">${s.compliance}</span></td>
+          <td class="p-3">${s.eta}</td>
+          <td class="p-3">${s.value}</td>
+          <td class="p-3 flex gap-2">
+            <button class="text-blue-600 hover:text-blue-800">👁️</button>
+            <button class="text-gray-600 hover:text-gray-800">⬇️</button>
+          </td>
+        </tr>`;
     });
-
-    // Trace Product
-    async function traceProduct() {
-      const batchId = document.getElementById('traceId').value.trim();
-      const result = document.getElementById('traceResult');
-      result.innerHTML = "⏳ Searching...";
-
-      const res = await fetch(`http://localhost:3001/getTrace/${batchId}`);
-      const data = await res.json();
-
-      if (res.ok) {
-        result.innerHTML = `
-          <p><strong>Batch ID:</strong> ${data.batchId}</p>
-          <p><strong>Farmer Name:</strong> ${data.farmerName}</p>
-          <p><strong>Crop:</strong> ${data.crop}</p>
-          <p><strong>Location:</strong> ${data.location}</p>
-          <p><strong>Date:</strong> ${data.date}</p>
-          <p><strong>Timestamp:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
-        `;
-      } else {
-        result.innerHTML = `<span class="text-red-600">❌ ${data.error}</span>`;
-      }
-    }
   </script>
+
 </body>
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Settings - Tracesangam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
+</head>
+
+<body class="flex bg-gray-50 font-sans text-sm text-gray-800">
+  <!-- Sidebar -->
+  <aside class="w-60 bg-white border-r p-4 flex flex-col min-h-screen">
+    <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
+    <nav class="space-y-4 flex-1">
+      <a href="index.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
+      <a href="shipment.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🔎 QR/Barcode Lookup</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">⚠️ Alerts / Tamper Events</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto">
+    <!-- Top Navbar -->
+    <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
+      <div class="flex gap-6 text-sm font-medium text-gray-600">
+        <a href="index.html">Dashboard</a>
+        <a href="shipment.html">Shipments</a>
+        <a href="export-logs.html">Export Logs</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="settings.html" class="text-blue-600">Settings</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="text-gray-400 text-xl">🔔</span>
+        <span class="text-gray-400 text-xl">👤</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Settings</h2>
+
+      <!-- Profile Settings -->
+      <div class="bg-white rounded shadow p-6 space-y-4">
+        <h3 class="text-md font-semibold">👤 Profile Settings</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" placeholder="First Name" value="John" class="border px-3 py-2 rounded w-full" />
+          <input type="text" placeholder="Last Name" value="Doe" class="border px-3 py-2 rounded w-full" />
+          <input type="email" placeholder="Email" value="john.doe@example.com" class="border px-3 py-2 rounded w-full col-span-2" />
+          <input type="text" placeholder="Company" value="Global Food Imports Ltd" class="border px-3 py-2 rounded w-full col-span-2" />
+          <select class="border px-3 py-2 rounded w-full col-span-2">
+            <option>Import Manager</option>
+            <option>Export Manager</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="bg-white rounded shadow p-6 space-y-4">
+        <h3 class="text-md font-semibold">🔔 Notification Settings</h3>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <span>Email Notifications <span class="text-xs text-gray-500">Receive updates via email</span></span>
+            <input type="checkbox" checked class="toggle" />
+          </div>
+          <div class="flex justify-between items-center">
+            <span>SMS Notifications <span class="text-xs text-gray-500">Receive critical alerts via SMS</span></span>
+            <input type="checkbox" class="toggle" />
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Alert Notifications <span class="text-xs text-gray-500">Get notified of tamper events</span></span>
+            <input type="checkbox" checked class="toggle" />
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Compliance Notifications <span class="text-xs text-gray-500">Updates on compliance status</span></span>
+            <input type="checkbox" checked class="toggle" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Settings -->
+      <div class="bg-white rounded shadow p-6 space-y-4">
+        <h3 class="text-md font-semibold">🛡️ Security Settings</h3>
+        <div class="flex justify-between items-center">
+          <span>Two-Factor Authentication <span class="text-xs text-gray-500">Add an extra layer of security</span></span>
+          <input type="checkbox" checked class="toggle" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-500">Session Timeout (minutes)</label>
+          <select class="border px-3 py-2 rounded w-full">
+            <option>15 minutes</option>
+            <option selected>30 minutes</option>
+            <option>60 minutes</option>
+          </select>
+        </div>
+        <button class="border px-4 py-2 rounded hover:bg-gray-100">Change Password</button>
+      </div>
+
+      <!-- System Settings -->
+      <div class="bg-white rounded shadow p-6 space-y-4">
+        <h3 class="text-md font-semibold">⚙️ System Settings</h3>
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs text-gray-500">Timezone</label>
+            <select class="border px-3 py-2 rounded w-full">
+              <option selected>UTC</option>
+              <option>IST</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">Language</label>
+            <select class="border px-3 py-2 rounded w-full">
+              <option selected>English</option>
+              <option>Hindi</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">Date Format</label>
+            <select class="border px-3 py-2 rounded w-full">
+              <option selected>DD/MM/YYYY</option>
+              <option>MM/DD/YYYY</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- API & Integration Settings -->
+      <div class="bg-white rounded shadow p-6 space-y-4">
+        <h3 class="text-md font-semibold">🔌 API & Integration Settings</h3>
+        <div class="flex items-center gap-4">
+          <input type="password" value="****************" class="border px-3 py-2 rounded w-full" />
+          <button class="border px-4 py-2 rounded hover:bg-gray-100">Regenerate</button>
+        </div>
+        <input type="text" value="https://apiexample.com/webhook" class="border px-3 py-2 rounded w-full" />
+        <button class="border px-4 py-2 rounded hover:bg-gray-100">Test Connection</button>
+      </div>
+
+      <!-- Save Button -->
+      <div class="text-right">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">💾 Save Settings</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

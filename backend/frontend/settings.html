@@ -3,138 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <title>Settings - Tracesangam</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
 </head>
+<body class="bg-gray-100 text-gray-800">
 
-<body class="flex bg-gray-50 font-sans text-sm text-gray-800">
-  <!-- Sidebar -->
-  <aside class="w-60 bg-white border-r p-4 flex flex-col min-h-screen">
-    <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
-    <nav class="space-y-4 flex-1">
-      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
-      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
-      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🔎 QR/Barcode Lookup</a>
-      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">⚠️ Alerts / Tamper Events</a>
-    </nav>
-  </aside>
+  <!-- Layout Container -->
+  <div class="flex min-h-screen">
 
-  <!-- Main Content -->
-  <main class="flex-1 overflow-y-auto">
-    <!-- Top Navbar -->
-    <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
-      <div class="flex gap-6 text-sm font-medium text-gray-600">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold text-blue-700 mb-8">Tracesangam</h1>
+      <nav class="space-y-4 text-gray-700 font-normal">
+        <a href="#" class="block hover:text-blue-600">Dashboard</a>
+        <a href="#" class="block hover:text-blue-600">Products</a>
+        <a href="#" class="block hover:text-blue-600">QR/Barcode Lookup</a>
+        <a href="#" class="block hover:text-blue-600">Alerts / Tamper Events</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 px-8 py-6">
+      <!-- Top Nav -->
+      <div class="flex justify-end space-x-8 text-sm text-gray-600 mb-6">
         <a href="index.html">Dashboard</a>
         <a href="shipment.html">Shipments</a>
         <a href="export-logs.html">Export Logs</a>
         <a href="compilance.html">Compliance</a>
-        <a href="settings.html" class="text-blue-600">Settings</a>
+        <a href="settings.html" class="font-semibold text-blue-600">Settings</a>
       </div>
-      <div class="flex items-center gap-4">
-        <span class="text-gray-400 text-xl">🔔</span>
-        <span class="text-gray-400 text-xl">👤</span>
-      </div>
-    </div>
 
-    <!-- Page Content -->
-    <div class="p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Settings</h2>
+      <h2 class="text-2xl font-semibold mb-6">Settings</h2>
 
-      <!-- Profile Settings -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">👤 Profile Settings</h3>
-        <div class="grid grid-cols-2 gap-4 mb-4">
-          <input type="text" placeholder="First Name" value="John" class="border px-3 py-2 rounded w-full" />
-          <input type="text" placeholder="Last Name" value="Doe" class="border px-3 py-2 rounded w-full" />
-          <input type="email" placeholder="Email" value="john.doe@example.com" class="border px-3 py-2 rounded w-full" />
-          <input type="text" placeholder="Company" value="Global Food Imports Ltd" class="border px-3 py-2 rounded w-full" />
-          <select class="border px-3 py-2 rounded w-full">
-            <option>Import Manager</option>
-            <option>Quality Manager</option>
+      <!-- Settings Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+        <!-- Profile Settings -->
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-lg font-semibold mb-4">👤 Profile Settings</h3>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <input type="text" placeholder="First Name" value="John" class="border rounded p-2 w-full" />
+            <input type="text" placeholder="Last Name" value="Doe" class="border rounded p-2 w-full" />
+          </div>
+          <input type="email" placeholder="Email" value="john.doe@example.com" class="border rounded p-2 w-full mb-3" />
+          <input type="text" placeholder="Company" value="Global Food Imports Ltd" class="border rounded p-2 w-full mb-3" />
+          <select class="border rounded p-2 w-full">
+            <option selected>Import Manager</option>
+            <option>Admin</option>
           </select>
         </div>
-      </div>
 
-      <!-- Notification Settings -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">🔔 Notification Settings</h3>
-        <div class="space-y-2">
-          <div class="flex justify-between items-center">
-            <p>Email Notifications <span class="text-gray-500 text-xs">Receive updates via email</span></p>
-            <input type="checkbox" checked class="toggle-checkbox" />
+        <!-- Notification Settings -->
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-lg font-semibold mb-4">🔔 Notification Settings</h3>
+          <div class="flex justify-between items-center mb-3">
+            <span>Email Notifications<br><small class="text-gray-500">Receive updates via email</small></span>
+            <input type="checkbox" checked class="toggle-checkbox">
+          </div>
+          <div class="flex justify-between items-center mb-3">
+            <span>SMS Notifications<br><small class="text-gray-500">Receive critical alerts via SMS</small></span>
+            <input type="checkbox" class="toggle-checkbox">
+          </div>
+          <div class="flex justify-between items-center mb-3">
+            <span>Alert Notifications<br><small class="text-gray-500">Get notified of tamper events</small></span>
+            <input type="checkbox" checked class="toggle-checkbox">
           </div>
           <div class="flex justify-between items-center">
-            <p>SMS Notifications <span class="text-gray-500 text-xs">Receive critical alerts via SMS</span></p>
-            <input type="checkbox" class="toggle-checkbox" />
-          </div>
-          <div class="flex justify-between items-center">
-            <p>Alert Notifications <span class="text-gray-500 text-xs">Get notified of tamper events</span></p>
-            <input type="checkbox" checked class="toggle-checkbox" />
-          </div>
-          <div class="flex justify-between items-center">
-            <p>Compliance Notifications <span class="text-gray-500 text-xs">Updates on compliance status</span></p>
-            <input type="checkbox" checked class="toggle-checkbox" />
+            <span>Compliance Notifications<br><small class="text-gray-500">Updates on compliance status</small></span>
+            <input type="checkbox" checked class="toggle-checkbox">
           </div>
         </div>
-      </div>
 
-      <!-- Security Settings -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">🔒 Security Settings</h3>
-        <div class="flex justify-between items-center mb-2">
-          <p>Two-Factor Authentication <span class="text-gray-500 text-xs">Add an extra layer of security</span></p>
-          <input type="checkbox" checked class="toggle-checkbox" />
-        </div>
-        <div class="mb-4">
-          <label class="text-xs text-gray-500">Session Timeout (minutes)</label>
-          <select class="border px-3 py-2 rounded w-full">
+        <!-- Security Settings -->
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-lg font-semibold mb-4">🔒 Security Settings</h3>
+          <div class="flex justify-between items-center mb-4">
+            <span>Two-Factor Authentication<br><small class="text-gray-500">Add an extra layer of security</small></span>
+            <input type="checkbox" checked class="toggle-checkbox">
+          </div>
+          <label class="block mb-2">Session Timeout (minutes)</label>
+          <select class="border rounded p-2 w-full mb-4">
             <option>30 minutes</option>
             <option>60 minutes</option>
+            <option>90 minutes</option>
+          </select>
+          <button class="bg-gray-200 px-4 py-2 rounded w-full">Change Password</button>
+        </div>
+
+        <!-- System Settings -->
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-lg font-semibold mb-4">⚙️ System Settings</h3>
+          <label class="block mb-2">Timezone</label>
+          <select class="border rounded p-2 w-full mb-3">
+            <option>UTC</option>
+            <option>IST</option>
+          </select>
+          <label class="block mb-2">Language</label>
+          <select class="border rounded p-2 w-full mb-3">
+            <option>English</option>
+            <option>Hindi</option>
+          </select>
+          <label class="block mb-2">Date Format</label>
+          <select class="border rounded p-2 w-full">
+            <option selected>DD/MM/YYYY</option>
+            <option>MM/DD/YYYY</option>
           </select>
         </div>
-        <button class="bg-gray-200 px-3 py-2 rounded hover:bg-gray-300">Change Password</button>
       </div>
 
-      <!-- System Settings -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">⚙️ System Settings</h3>
-        <div class="space-y-2">
-          <div>
-            <label class="text-xs text-gray-500">Timezone</label>
-            <select class="border px-3 py-2 rounded w-full">
-              <option>UTC</option>
-              <option>IST</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-xs text-gray-500">Language</label>
-            <select class="border px-3 py-2 rounded w-full">
-              <option>English</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-xs text-gray-500">Date Format</label>
-            <input type="text" value="DD/MM/YYYY" class="border px-3 py-2 rounded w-full" />
-          </div>
-        </div>
+      <!-- API Settings -->
+      <div class="bg-white p-6 rounded shadow mb-6">
+        <h3 class="text-lg font-semibold mb-4">🔌 API & Integration Settings</h3>
+        <label class="block mb-2">API Key</label>
+        <input type="password" value="************" class="border rounded p-2 w-full mb-3" readonly />
+        <label class="block mb-2">Webhook URL</label>
+        <input type="url" value="https://api.example.com/webhook" class="border rounded p-2 w-full mb-4" />
+        <button class="bg-gray-200 px-4 py-2 rounded">Test Connection</button>
       </div>
 
-      <!-- API & Integration Settings -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">🗄️ API & Integration Settings</h3>
-        <div class="flex items-center mb-4">
-          <input type="password" value="************" class="border px-3 py-2 rounded w-full" />
-          <button class="bg-gray-200 px-3 py-2 rounded ml-2 hover:bg-gray-300">Regenerate</button>
-        </div>
-        <input type="text" value="https://api.example.com/webhook" class="border px-3 py-2 rounded w-full mb-4" />
-        <button class="bg-gray-200 px-3 py-2 rounded hover:bg-gray-300">Test Connection</button>
+      <!-- Save Button -->
+      <div class="text-right">
+        <button class="bg-blue-600 text-white px-6 py-2 rounded shadow">💾 Save Settings</button>
       </div>
+    </main>
+  </div>
 
-      <div class="flex justify-end">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">💾 Save Settings</button>
-      </div>
-    </div>
-  </main>
 </body>
 </html>

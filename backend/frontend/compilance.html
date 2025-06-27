@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Dashboard - Tracesangam</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Export Logs - Tracesangam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
+</head>
 
-  <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
-    <!-- Sidebar -->
-    <aside class="w-60 bg-white border-r p-4 flex flex-col">
-      <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
-      <nav class="space-y-4 flex-1">
-        <a href="#" class="flex items-center gap-2 text-blue-600 font-medium">
-          🏠 Dashboard
-        </a>
-        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-          📦 Products
-        </a>
-        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-          🔎 QR/Barcode Lookup
-        </a>
-        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-          ⚠️ Alerts / Tamper Events
-        </a>
-      </nav>
-    </aside>
+<body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+  <!-- Sidebar -->
+  <aside class="w-60 bg-white border-r p-4 flex flex-col">
+    <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
+    <nav class="space-y-4 flex-1">
+      <a href="index.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
+      <a href="shipment.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🔎 QR/Barcode Lookup</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">⚠️ Alerts / Tamper Events</a>
+    </nav>
+  </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <!-- Top Navbar -->
-      <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
-        <div class="flex gap-6 text-sm font-medium text-gray-600">
-          <a href="index.html">Dashboard</a>
-          <a href="shipment.html">Shipments</a>
-          <a href="export-logs.html">Export Logs</a>
-          <a href="compilance.html" class="text-blue-600">Compliance</a>
-          <a href="settings.html">Settings</a>
-        </div>
-        <div>
-          <span class="text-gray-400 text-xl">🔔</span>
-        </div>
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto">
+    <!-- Top Navbar -->
+    <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
+      <div class="flex gap-6 text-sm font-medium text-gray-600">
+        <a href="index.html">Dashboard</a>
+        <a href="shipment.html">Shipments</a>
+        <a href="export-logs.html">Export Logs</a>
+        <a href="compilance.html" class="text-blue-600">Compliance</a>
+        <a href="settings.html">Settings</a>
       </div>
+      <div><span class="text-gray-400 text-xl">🔔</span></div>
+    </div>
 
-      <!-- Header -->
-      <h2 class="text-2xl font-semibold mb-4">Compliance Management</h2>
+    <!-- Page Content -->
+    <div class="p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Compilance Management</h2>
 
       <!-- Summary -->
       <div class="grid grid-cols-4 gap-4 mb-6">

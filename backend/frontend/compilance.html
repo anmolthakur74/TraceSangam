@@ -13,8 +13,8 @@
   <aside class="w-60 bg-white border-r p-4 flex flex-col min-h-screen">
     <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
     <nav class="space-y-4 flex-1">
-      <a href="index.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
-      <a href="shipment.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
       <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🔎 QR/Barcode Lookup</a>
       <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">⚠️ Alerts / Tamper Events</a>
     </nav>
@@ -25,11 +25,11 @@
     <!-- Top Navbar -->
     <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
       <div class="flex gap-6 text-sm font-medium text-gray-600">
-        <a href="index.html">Dashboard</a>
-        <a href="shipment.html">Shipments</a>
-        <a href="export-logs.html">Export Logs</a>
-        <a href="compliance.html" class="text-blue-600">Compliance</a>
-        <a href="settings.html">Settings</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Shipments</a>
+        <a href="#">Export Logs</a>
+        <a href="#" class="text-blue-600">Compliance</a>
+        <a href="#">Settings</a>
       </div>
       <div class="flex items-center gap-4">
         <span class="text-gray-400 text-xl">🔔</span>
@@ -44,20 +44,20 @@
       <!-- Metrics Summary -->
       <div class="grid grid-cols-4 gap-4">
         <div class="bg-white p-4 rounded shadow">
-          <p class="text-xs text-gray-500">Total Checks</p>
-          <p class="text-lg font-semibold">3</p>
+          <p class="text-xs text-gray-500 flex items-center gap-2"><span>📄</span>Total Checks</p>
+          <p class="text-lg font-semibold mt-2">3</p>
         </div>
         <div class="bg-white p-4 rounded shadow">
-          <p class="text-xs text-gray-500">Compliant</p>
-          <p class="text-lg font-semibold text-green-600">2</p>
+          <p class="text-xs text-gray-500 flex items-center gap-2"><span>✅</span>Compliant</p>
+          <p class="text-lg font-semibold text-green-600 mt-2">2</p>
         </div>
         <div class="bg-white p-4 rounded shadow">
-          <p class="text-xs text-gray-500">Non-Compliant</p>
-          <p class="text-lg font-semibold text-red-600">0</p>
+          <p class="text-xs text-gray-500 flex items-center gap-2"><span>❌</span>Non-Compliant</p>
+          <p class="text-lg font-semibold text-red-600 mt-2">0</p>
         </div>
         <div class="bg-white p-4 rounded shadow">
-          <p class="text-xs text-gray-500">Under Review</p>
-          <p class="text-lg font-semibold text-yellow-600">1</p>
+          <p class="text-xs text-gray-500 flex items-center gap-2"><span>⏰</span>Under Review</p>
+          <p class="text-lg font-semibold text-yellow-600 mt-2">1</p>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
 
       <!-- Quick Actions -->
       <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-md font-semibold mb-4">📝 Quick Actions</h3>
+        <h3 class="text-md font-semibold mb-4">Quick Actions</h3>
         <div class="space-y-2">
           <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">⬇ Generate Report</button>
           <button class="w-full border py-2 rounded hover:bg-gray-100">📄 Schedule Audit</button>
@@ -123,7 +123,11 @@
               <td>Dr. Sharma</td>
               <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded">✔️ Compliant</span></td>
               <td>No issues</td>
-              <td><span class="bg-gray-100 px-2 py-1 rounded">Organic Certification</span> <span class="bg-gray-100 px-2 py-1 rounded">FSSAI License</span> <span class="bg-gray-100 px-2 py-1 rounded">+1 more</span></td>
+              <td class="space-x-1">
+                <span class="bg-gray-100 px-2 py-1 rounded">Organic Certification</span>
+                <span class="bg-gray-100 px-2 py-1 rounded">FSSAI License</span>
+                <span class="bg-gray-100 px-2 py-1 rounded">+1 more</span>
+              </td>
               <td>
                 <button>📄</button>
                 <button>⬇</button>
@@ -137,7 +141,10 @@
               <td>Ms. Patel</td>
               <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded">✔️ Compliant</span></td>
               <td>No issues</td>
-              <td><span class="bg-gray-100 px-2 py-1 rounded">Phytosanitary Certificate</span> <span class="bg-gray-100 px-2 py-1 rounded">Quality Grade A</span></td>
+              <td class="space-x-1">
+                <span class="bg-gray-100 px-2 py-1 rounded">Phytosanitary Certificate</span>
+                <span class="bg-gray-100 px-2 py-1 rounded">Quality Grade A</span>
+              </td>
               <td>
                 <button>📄</button>
                 <button>⬇</button>

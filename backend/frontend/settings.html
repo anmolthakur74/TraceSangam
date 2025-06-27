@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Settings - Tracesangam</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard - Tracesangam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
+  </head>
 
-  <!-- Layout Container -->
-  <div class="flex min-h-screen">
-
+  <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
     <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-md p-6">
-      <h1 class="text-2xl font-bold text-blue-700 mb-8">Tracesangam</h1>
-      <nav class="space-y-4 text-gray-700 font-normal">
-        <a href="#" class="block hover:text-blue-600">Dashboard</a>
-        <a href="#" class="block hover:text-blue-600">Products</a>
-        <a href="#" class="block hover:text-blue-600">QR/Barcode Lookup</a>
-        <a href="#" class="block hover:text-blue-600">Alerts / Tamper Events</a>
+    <aside class="w-60 bg-white border-r p-4 flex flex-col">
+      <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
+      <nav class="space-y-4 flex-1">
+        <a href="#" class="flex items-center gap-2 text-blue-600 font-medium">
+          🏠 Dashboard
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          📦 Products
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          🔎 QR/Barcode Lookup
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          ⚠️ Alerts / Tamper Events
+        </a>
       </nav>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 px-8 py-6">
-      <!-- Top Nav -->
-      <div class="flex justify-end space-x-8 text-sm text-gray-600 mb-6">
-        <a href="index.html">Dashboard</a>
-        <a href="shipment.html">Shipments</a>
-        <a href="export-logs.html">Export Logs</a>
-        <a href="compilance.html">Compliance</a>
-        <a href="settings.html" class="font-semibold text-blue-600">Settings</a>
+    <main class="flex-1 overflow-y-auto">
+      <!-- Top Navbar -->
+      <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
+        <div class="flex gap-6 text-sm font-medium text-gray-600">
+          <a href="index.html">Dashboard</a>
+          <a href="shipment.html">Shipments</a>
+          <a href="export-logs.html">Export Logs</a>
+          <a href="compilance.html">Compliance</a>
+          <a href="settings.html" class="text-blue-600">Settings</a>
+        </div>
+        <div>
+          <span class="text-gray-400 text-xl">🔔</span>
+        </div>
       </div>
 
       <h2 class="text-2xl font-semibold mb-6">Settings</h2>

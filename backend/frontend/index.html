@@ -2,31 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Shipments Dashboard - Blocksangam</title>
+    <title>Dashboard - AgriTrace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png"/>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
   </head>
+
   <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
     <!-- Sidebar -->
-    <aside class="w-60 bg-white border-r p-4 flex flex-col justify-between">
-      <div>
-        <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
-        <nav class="space-y-4">
-          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>🏠</span> Dashboard
-          </a>
-          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>📦</span> Products
-          </a>
-          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>🔎</span> QR/Barcode Lookup
-          </a>
-          <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
-            <span>⚠️</span> Alerts / Tamper Events
-          </a>
-        </nav>
-      </div>
+    <aside class="w-60 bg-white border-r p-4 flex flex-col">
+      <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Blocksangam</h1>
+      <nav class="space-y-4 flex-1">
+        <a href="#" class="flex items-center gap-2 text-blue-600 font-medium">
+          🏠 Dashboard
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          📦 Products
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          🔎 QR/Barcode Lookup
+        </a>
+        <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+          ⚠️ Alerts / Tamper Events
+        </a>
+      </nav>
     </aside>
 
     <!-- Main Content -->
@@ -34,7 +33,8 @@
       <!-- Top Navbar -->
       <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
         <div class="flex gap-6 text-sm font-medium text-gray-600">
-          <a href="#" class="text-blue-600">Shipments</a>
+          <a href="#" class="text-blue-600">Dashboard</a>
+          <a href="shipment.html">Shipments</a>
           <a href="#">Export Logs</a>
           <a href="#">Compliance</a>
           <a href="#">Settings</a>
@@ -45,120 +45,113 @@
       </div>
 
       <!-- Page Content -->
-      <div class="p-6 space-y-6">
-        <h2 class="text-xl font-semibold">Shipments Management</h2>
-
-        <!-- Filters -->
-        <div class="flex items-center gap-4">
+      <div class="p-6 grid grid-cols-3 gap-6">
+        <!-- Search and Metrics -->
+        <div class="col-span-2 space-y-6">
           <input
             type="text"
-            placeholder="Search shipments..."
-            class="flex-1 px-3 py-2 border rounded-md border-gray-300"
+            placeholder="Track by Box ID or Product Name"
+            class="w-full px-3 py-2 border rounded-md border-gray-300"
           />
-          <select class="px-2 py-2 border rounded-md border-gray-300">
-            <option>All Status</option>
-            <option>At Port</option>
-            <option>In Transit</option>
-            <option>Delivered</option>
-          </select>
-          <select class="px-2 py-2 border rounded-md border-gray-300">
-            <option>All Compliance</option>
-            <option>Compliant</option>
-            <option>Non-Compliant</option>
-          </select>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            ⬇ Export
-          </button>
+
+          <div class="grid grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+              <div class="text-3xl">📦</div>
+              <div>
+                <p class="text-xs text-gray-500">Total Shipments</p>
+                <p class="text-lg font-semibold">3</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+              <div class="text-3xl">✅</div>
+              <div>
+                <p class="text-xs text-gray-500">Compliant</p>
+                <p class="text-lg font-semibold">3</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+              <div class="text-3xl">⏰</div>
+              <div>
+                <p class="text-xs text-gray-500">In Transit</p>
+                <p class="text-lg font-semibold">2</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+              <div class="text-3xl">⚠️</div>
+              <div>
+                <p class="text-xs text-gray-500">Alerts</p>
+                <p class="text-lg font-semibold">6</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Shipments -->
+          <div>
+            <h2 class="text-lg font-semibold mb-4">Recent Shipments</h2>
+            <div class="space-y-4">
+              <!-- Shipment Card -->
+              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+                <div>
+                  <p class="font-semibold">Organic Basmati Rice</p>
+                  <p class="text-xs text-gray-500">Box ID: BX001</p>
+                  <p class="text-xs text-gray-500">📍 Nashik, India &nbsp; 📅 ETA: 2024-01-15 &nbsp; 🌡️ 22°C</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">At Port</span>
+                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+                <div>
+                  <p class="font-semibold">Alphonso Mangoes</p>
+                  <p class="text-xs text-gray-500">Box ID: BX002</p>
+                  <p class="text-xs text-gray-500">📍 Ratnagiri, India &nbsp; 📅 ETA: 2024-01-18 &nbsp; 🌡️ 18°C</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">In Transit</span>
+                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+                <div>
+                  <p class="font-semibold">Darjeeling Tea</p>
+                  <p class="text-xs text-gray-500">Box ID: BX003</p>
+                  <p class="text-xs text-gray-500">📍 Darjeeling, India &nbsp; 📅 ETA: 2024-01-10 &nbsp; 🌡️ 25°C</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Delivered</span>
+                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Table -->
-        <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-          <table class="min-w-full text-sm text-left">
-            <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
-              <tr>
-                <th class="px-6 py-3">Shipment ID</th>
-                <th class="px-6 py-3">Product</th>
-                <th class="px-6 py-3">Origin → Destination</th>
-                <th class="px-6 py-3">Status</th>
-                <th class="px-6 py-3">Compliance</th>
-                <th class="px-6 py-3">ETA</th>
-                <th class="px-6 py-3">Value</th>
-                <th class="px-6 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="text-gray-700" id="shipmentTableBody">
-              <!-- Dynamic Data -->
-            </tbody>
-          </table>
+        <!-- Compliance Overview -->
+        <div class="space-y-6">
+          <div class="bg-white p-4 rounded shadow">
+            <h3 class="text-md font-semibold mb-4">System Status</h3>
+            <p class="text-xs text-gray-500">Overall Compliance</p>
+            <p class="text-xl font-bold text-green-600 mb-2">96.1%</p>
+            <p class="text-xs text-gray-500">Last Check: 2 hours ago</p>
+            <p class="text-xs text-gray-500 mb-4">Active Alerts: <span class="text-red-600 font-semibold">6</span></p>
+            <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+              ⬇ Download Report
+            </button>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow">
+            <h3 class="text-md font-semibold mb-4">Recent Activity</h3>
+            <ul class="space-y-2 text-xs text-gray-700">
+              <li>🟢 BX003 delivered successfully &nbsp; <span class="text-gray-400">2 hours ago</span></li>
+              <li>🔵 BX001 reached Hamburg Port &nbsp; <span class="text-gray-400">4 hours ago</span></li>
+              <li>🟠 Temperature alert for BX002 &nbsp; <span class="text-gray-400">6 hours ago</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </main>
-
-    <script>
-      const shipments = [
-        {
-          id: "BX001",
-          product: "Organic Basmati Rice",
-          quantity: "25 tons",
-          origin: "Nashik, India",
-          destination: "Hamburg, Germany",
-          status: "At Port",
-          compliance: "Compliant",
-          eta: "2024-01-15",
-          value: "$45,000"
-        },
-        {
-          id: "BX002",
-          product: "Alphonso Mangoes",
-          quantity: "15 tons",
-          origin: "Ratnagiri, India",
-          destination: "Rotterdam, Netherlands",
-          status: "In Transit",
-          compliance: "Compliant",
-          eta: "2024-01-18",
-          value: "$32,000"
-        },
-        {
-          id: "BX003",
-          product: "Darjeeling Tea",
-          quantity: "5 tons",
-          origin: "Darjeeling, India",
-          destination: "London, UK",
-          status: "Delivered",
-          compliance: "Compliant",
-          eta: "2024-01-10",
-          value: "$28,000"
-        }
-      ];
-
-      const table = document.getElementById("shipmentTableBody");
-
-      shipments.forEach(s => {
-        const statusColor = s.status === "Delivered"
-          ? "bg-green-100 text-green-800"
-          : s.status === "In Transit"
-          ? "bg-blue-100 text-blue-800"
-          : "bg-yellow-100 text-yellow-800";
-
-        table.innerHTML += `
-          <tr class="border-t">
-            <td class="px-6 py-3 font-medium">${s.id}</td>
-            <td class="px-6 py-3">${s.product}<br/><span class="text-xs text-gray-500">${s.quantity}</span></td>
-            <td class="px-6 py-3">${s.origin} → ${s.destination}</td>
-            <td class="px-6 py-3">
-              <span class="text-xs px-2 py-1 rounded ${statusColor}">${s.status}</span>
-            </td>
-            <td class="px-6 py-3">
-              <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">${s.compliance}</span>
-            </td>
-            <td class="px-6 py-3">${s.eta}</td>
-            <td class="px-6 py-3">${s.value}</td>
-            <td class="px-6 py-3 space-x-2">
-              <button title="View" class="hover:text-blue-600">👁️</button>
-              <button title="Download" class="hover:text-gray-700">⬇️</button>
-            </td>
-          </tr>`;
-      });
-    </script>
   </body>
 </html>

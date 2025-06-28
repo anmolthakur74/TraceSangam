@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Settings - Tracesangam</title>
+  <title>Compliance - Tracesangam</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
 </head>
 
-<!-- Block unauthenticated access -->
-<script>
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) {
-    window.location.href = "login.html";
-  }
-</script>
-
 <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+
+  <!-- 🔐 Block unauthenticated access -->
+  <script>
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.email) {
+        window.location.href = "login.html";
+      }
+    } catch (e) {
+      window.location.href = "login.html";
+    }
+  </script>
+
   <!-- Sidebar -->
   <aside class="w-60 bg-white border-r p-4 flex flex-col">
     <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
@@ -30,6 +35,7 @@
 
   <!-- Main Content -->
   <main class="flex-1 overflow-y-auto">
+
     <!-- Top Navbar -->
     <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
       <div class="flex gap-6 text-sm font-medium text-gray-600">
@@ -39,6 +45,7 @@
         <a href="compilance.html" class="text-blue-600">Compliance</a>
         <a href="settings.html">Settings</a>
       </div>
+
       <!-- User Dropdown -->
       <div class="relative">
         <button onclick="toggleUserMenu()" class="flex items-center gap-2 px-3 py-2 text-sm border rounded hover:bg-gray-100">
@@ -52,28 +59,32 @@
       </div>
     </div>
 
-<script>
-    function toggleUserMenu() {
-      document.getElementById("userMenu").classList.toggle("hidden");
-    }
+    <!-- User Menu Script -->
+    <script>
+      function toggleUserMenu() {
+        document.getElementById("userMenu").classList.toggle("hidden");
+      }
 
-    function logout() {
-      localStorage.removeItem("user");
-      window.location.href = "login.html";
-    }
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
 
-    // Set user name dynamically
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    if (userInfo && userInfo.email) {
-      const nameFromEmail = userInfo.email.split("@")[0];
-      document.getElementById("userName").innerText = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
-    }
-  </script>
-    </div>
+      // 👤 Show username from email
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        if (userInfo && userInfo.email) {
+          const nameFromEmail = userInfo.email.split("@")[0];
+          document.getElementById("userName").innerText = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        }
+      } catch (err) {
+        document.getElementById("userName").innerText = "User";
+      }
+    </script>
 
     <!-- Page Content -->
     <div class="p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Compilance Management</h2>
+      <h2 class="text-xl font-semibold">Compliance Management</h2>
 
       <!-- Summary -->
       <div class="grid grid-cols-4 gap-4 mb-6">
@@ -97,7 +108,6 @@
 
       <!-- Overview and Actions -->
       <div class="grid grid-cols-3 gap-6 mb-6">
-        <!-- Compliance Rate -->
         <div class="col-span-2 bg-white p-6 rounded shadow">
           <h3 class="text-lg font-semibold mb-2">Compliance Rate Overview</h3>
           <div class="w-full bg-gray-200 h-3 rounded mb-2">
@@ -111,7 +121,6 @@
           <div class="text-right font-semibold text-green-600 mt-2 text-lg">67%</div>
         </div>
 
-        <!-- Quick Actions -->
         <div class="bg-white p-6 rounded shadow space-y-4">
           <h3 class="text-lg font-semibold">Quick Actions</h3>
           <button class="w-full bg-blue-600 text-white py-2 rounded">Generate Report</button>
@@ -120,7 +129,7 @@
         </div>
       </div>
 
-      <!-- Records -->
+      <!-- Records Table -->
       <div class="bg-white p-4 rounded shadow">
         <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
           <input type="text" class="border border-gray-300 px-4 py-2 rounded w-full md:w-1/2" placeholder="Search compliance records...">
@@ -134,7 +143,6 @@
           </div>
         </div>
 
-        <!-- Table -->
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm text-left">
             <thead class="bg-gray-100 text-gray-600">
@@ -151,6 +159,7 @@
               </tr>
             </thead>
             <tbody class="text-gray-700">
+              <!-- Your rows -->
               <tr class="border-t">
                 <td class="p-2">COMP001</td>
                 <td class="p-2">BX001</td>
@@ -166,7 +175,6 @@
                 </td>
                 <td class="p-2 text-blue-600">📄 ⬇️</td>
               </tr>
-
               <tr class="border-t">
                 <td class="p-2">COMP002</td>
                 <td class="p-2">BX002</td>
@@ -181,7 +189,6 @@
                 </td>
                 <td class="p-2 text-blue-600">📄 ⬇️</td>
               </tr>
-
               <tr class="border-t">
                 <td class="p-2">COMP003</td>
                 <td class="p-2">BX004</td>
@@ -202,7 +209,7 @@
         </div>
       </div>
     </div>
-  </div>
 
+  </main>
 </body>
 </html>

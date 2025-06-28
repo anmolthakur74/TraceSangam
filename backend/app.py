@@ -37,7 +37,7 @@ def signup():
     return jsonify({'message': 'User created successfully'}), 201
 
 
-@app.route('/frontend/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()

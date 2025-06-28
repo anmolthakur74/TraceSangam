@@ -37,7 +37,27 @@
         <a href="compilance.html">Compliance</a>
         <a href="settings.html" class="text-blue-600">Settings</a>
       </div>
-      <div><span class="text-gray-400 text-xl">🔔</span></div>
+      <div class="relative">
+  <button onclick="toggleUserMenu()" class="flex items-center gap-2 px-3 py-2 text-sm border rounded hover:bg-gray-100">
+    👤 John Doe ▾
+  </button>
+  <div id="userMenu" class="absolute right-0 mt-2 bg-white border shadow-md rounded hidden w-40">
+    <a href="settings.html" class="block px-4 py-2 hover:bg-gray-100">⚙️ Settings</a>
+    <a href="profile.html" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
+    <button onclick="logout()" class="block px-4 py-2 text-red-600 hover:bg-gray-100 w-full text-left">🚪 Logout</button>
+  </div>
+</div>
+
+<script>
+  function toggleUserMenu() {
+    document.getElementById("userMenu").classList.toggle("hidden");
+  }
+
+  function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+  }
+</script>
     </div>
 
     <!-- Page Content -->

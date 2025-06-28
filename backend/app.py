@@ -1,17 +1,20 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User
+
+from models import db, User  # ✅ Import your model correctly
 
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # ✅ this creates it in the same folder as app.py
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# ✅ Bind Flask app to SQLAlchemy
 db.init_app(app)
 
-# Create DB
+# ✅ Create DB inside app context
 with app.app_context():
     db.create_all()
 

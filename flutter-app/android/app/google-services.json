@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "583803675622",
+    "project_id": "trace-sangam",
+    "storage_bucket": "trace-sangam.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583803675622:android:255300fba691b345cd2c27",
+        "android_client_info": {
+          "package_name": "com.tracesangam.agent_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPAvVprdCiRWm3Hwk24CQKGWBstbiykhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

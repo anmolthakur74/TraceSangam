@@ -18,7 +18,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-@app.route('/api/signup', methods=['POST'])
+@app.route('/frontend/signup', methods=['POST'])
 def signup():
     data = request.get_json()
 
@@ -37,7 +37,7 @@ def signup():
     return jsonify({'message': 'User created successfully'}), 201
 
 
-@app.route('/api/login', methods=['POST'])
+@app.route('/frontend/login', methods=['POST'])
 def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()

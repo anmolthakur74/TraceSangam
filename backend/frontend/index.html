@@ -8,15 +8,20 @@
   <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
 </head>
 
-<!-- Block unauthenticated access -->
-<script>
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) {
-    window.location.href = "login.html";
-  }
-</script>
-
 <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+
+  <!-- 🔐 Check if user is logged in -->
+  <script>
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.email) {
+        window.location.href = "login.html";
+      }
+    } catch (e) {
+      window.location.href = "login.html";
+    }
+  </script>
+
   <!-- Sidebar -->
   <aside class="w-60 bg-white border-r p-4 flex flex-col">
     <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
@@ -30,6 +35,7 @@
 
   <!-- Main Content -->
   <main class="flex-1 overflow-y-auto">
+
     <!-- Top Navbar -->
     <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
       <div class="flex gap-6 text-sm font-medium text-gray-600">
@@ -39,6 +45,7 @@
         <a href="compilance.html">Compliance</a>
         <a href="settings.html">Settings</a>
       </div>
+
       <!-- User Dropdown -->
       <div class="relative">
         <button onclick="toggleUserMenu()" class="flex items-center gap-2 px-3 py-2 text-sm border rounded hover:bg-gray-100">
@@ -52,132 +59,131 @@
       </div>
     </div>
 
-<script>
-    function toggleUserMenu() {
-      document.getElementById("userMenu").classList.toggle("hidden");
-    }
+    <script>
+      function toggleUserMenu() {
+        document.getElementById("userMenu").classList.toggle("hidden");
+      }
 
-    function logout() {
-      localStorage.removeItem("user");
-      window.location.href = "login.html";
-    }
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
 
-    // Set user name dynamically
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    if (userInfo && userInfo.email) {
-      const nameFromEmail = userInfo.email.split("@")[0];
-      document.getElementById("userName").innerText = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
-    }
-  </script>
-    </div>
-      <!-- Page Content -->
-      <div class="p-6 grid grid-cols-3 gap-6">
-        <!-- Search and Metrics -->
-        <div class="col-span-2 space-y-6">
-          <input
-            type="text"
-            placeholder="Track by Box ID or Product Name"
-            class="w-full px-3 py-2 border rounded-md border-gray-300"
-          />
+      // 👤 Dynamically insert logged-in user's name
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        if (userInfo && userInfo.email) {
+          const nameFromEmail = userInfo.email.split("@")[0];
+          document.getElementById("userName").innerText =
+            nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        }
+      } catch (err) {
+        document.getElementById("userName").innerText = "User";
+      }
+    </script>
 
-          <div class="grid grid-cols-4 gap-4">
-            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
-              <div class="text-3xl">📦</div>
-              <div>
-                <p class="text-xs text-gray-500">Total Shipments</p>
-                <p class="text-lg font-semibold">3</p>
-              </div>
-            </div>
-            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
-              <div class="text-3xl">✅</div>
-              <div>
-                <p class="text-xs text-gray-500">Compliant</p>
-                <p class="text-lg font-semibold">3</p>
-              </div>
-            </div>
-            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
-              <div class="text-3xl">⏰</div>
-              <div>
-                <p class="text-xs text-gray-500">In Transit</p>
-                <p class="text-lg font-semibold">2</p>
-              </div>
-            </div>
-            <div class="bg-white p-4 rounded shadow flex items-center gap-4">
-              <div class="text-3xl">⚠️</div>
-              <div>
-                <p class="text-xs text-gray-500">Alerts</p>
-                <p class="text-lg font-semibold">6</p>
-              </div>
+    <!-- Page Content -->
+    <div class="p-6 grid grid-cols-3 gap-6">
+      <!-- Search and Metrics -->
+      <div class="col-span-2 space-y-6">
+        <input type="text" placeholder="Track by Box ID or Product Name" class="w-full px-3 py-2 border rounded-md border-gray-300" />
+
+        <div class="grid grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+            <div class="text-3xl">📦</div>
+            <div>
+              <p class="text-xs text-gray-500">Total Shipments</p>
+              <p class="text-lg font-semibold">3</p>
             </div>
           </div>
-
-          <!-- Recent Shipments -->
-          <div>
-            <h2 class="text-lg font-semibold mb-4">Recent Shipments</h2>
-            <div class="space-y-4">
-              <!-- Shipment Card -->
-              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-                <div>
-                  <p class="font-semibold">Organic Basmati Rice</p>
-                  <p class="text-xs text-gray-500">Box ID: BX001</p>
-                  <p class="text-xs text-gray-500">📍 Nashik, India &nbsp; 📅 ETA: 2024-01-15 &nbsp; 🌡️ 22°C</p>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">At Port</span>
-                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
-                </div>
-              </div>
-
-              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-                <div>
-                  <p class="font-semibold">Alphonso Mangoes</p>
-                  <p class="text-xs text-gray-500">Box ID: BX002</p>
-                  <p class="text-xs text-gray-500">📍 Ratnagiri, India &nbsp; 📅 ETA: 2024-01-18 &nbsp; 🌡️ 18°C</p>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">In Transit</span>
-                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
-                </div>
-              </div>
-
-              <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-                <div>
-                  <p class="font-semibold">Darjeeling Tea</p>
-                  <p class="text-xs text-gray-500">Box ID: BX003</p>
-                  <p class="text-xs text-gray-500">📍 Darjeeling, India &nbsp; 📅 ETA: 2024-01-10 &nbsp; 🌡️ 25°C</p>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Delivered</span>
-                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
-                </div>
-              </div>
+          <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+            <div class="text-3xl">✅</div>
+            <div>
+              <p class="text-xs text-gray-500">Compliant</p>
+              <p class="text-lg font-semibold">3</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+            <div class="text-3xl">⏰</div>
+            <div>
+              <p class="text-xs text-gray-500">In Transit</p>
+              <p class="text-lg font-semibold">2</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+            <div class="text-3xl">⚠️</div>
+            <div>
+              <p class="text-xs text-gray-500">Alerts</p>
+              <p class="text-lg font-semibold">6</p>
             </div>
           </div>
         </div>
 
-        <!-- Compliance Overview -->
-        <div class="space-y-6">
-          <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-md font-semibold mb-4">System Status</h3>
-            <p class="text-xs text-gray-500">Overall Compliance</p>
-            <p class="text-xl font-bold text-green-600 mb-2">96.1%</p>
-            <p class="text-xs text-gray-500">Last Check: 2 hours ago</p>
-            <p class="text-xs text-gray-500 mb-4">Active Alerts: <span class="text-red-600 font-semibold">6</span></p>
-            <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-              ⬇ Download Report
-            </button>
-          </div>
+        <!-- Recent Shipments -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">Recent Shipments</h2>
+          <div class="space-y-4">
+            <!-- Shipment Cards -->
+            <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+              <div>
+                <p class="font-semibold">Organic Basmati Rice</p>
+                <p class="text-xs text-gray-500">Box ID: BX001</p>
+                <p class="text-xs text-gray-500">📍 Nashik, India &nbsp; 📅 ETA: 2024-01-15 &nbsp; 🌡️ 22°C</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">At Port</span>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+              </div>
+            </div>
 
-          <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-md font-semibold mb-4">Recent Activity</h3>
-            <ul class="space-y-2 text-xs text-gray-700">
-              <li>🟢 BX003 delivered successfully &nbsp; <span class="text-gray-400">2 hours ago</span></li>
-              <li>🔵 BX001 reached Hamburg Port &nbsp; <span class="text-gray-400">4 hours ago</span></li>
-              <li>🟠 Temperature alert for BX002 &nbsp; <span class="text-gray-400">6 hours ago</span></li>
-            </ul>
+            <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+              <div>
+                <p class="font-semibold">Alphonso Mangoes</p>
+                <p class="text-xs text-gray-500">Box ID: BX002</p>
+                <p class="text-xs text-gray-500">📍 Ratnagiri, India &nbsp; 📅 ETA: 2024-01-18 &nbsp; 🌡️ 18°C</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">In Transit</span>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+              <div>
+                <p class="font-semibold">Darjeeling Tea</p>
+                <p class="text-xs text-gray-500">Box ID: BX003</p>
+                <p class="text-xs text-gray-500">📍 Darjeeling, India &nbsp; 📅 ETA: 2024-01-10 &nbsp; 🌡️ 25°C</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Delivered</span>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Secure</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </main>
-  </body>
+
+      <!-- Compliance Overview -->
+      <div class="space-y-6">
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="text-md font-semibold mb-4">System Status</h3>
+          <p class="text-xs text-gray-500">Overall Compliance</p>
+          <p class="text-xl font-bold text-green-600 mb-2">96.1%</p>
+          <p class="text-xs text-gray-500">Last Check: 2 hours ago</p>
+          <p class="text-xs text-gray-500 mb-4">Active Alerts: <span class="text-red-600 font-semibold">6</span></p>
+          <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">⬇ Download Report</button>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="text-md font-semibold mb-4">Recent Activity</h3>
+          <ul class="space-y-2 text-xs text-gray-700">
+            <li>🟢 BX003 delivered successfully &nbsp; <span class="text-gray-400">2 hours ago</span></li>
+            <li>🔵 BX001 reached Hamburg Port &nbsp; <span class="text-gray-400">4 hours ago</span></li>
+            <li>🟠 Temperature alert for BX002 &nbsp; <span class="text-gray-400">6 hours ago</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
 </html>

@@ -1,56 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Signup - Tracesangam</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded shadow-md w-96">
-    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Sign Up for Tracesangam</h2>
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash
 
-    <input type="email" id="email" placeholder="Email" class="w-full mb-3 p-2 border rounded" />
-    <input type="password" id="password" placeholder="Password" class="w-full mb-4 p-2 border rounded" />
+app = Flask(__name__)
+CORS(app)
 
-    <button onclick="signup()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Sign Up</button>
-    <p class="mt-4 text-sm text-center">
-      Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
-    </p>
-  </div>
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-  <script>
-    async function signup() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+# User model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
-      if (!email || !password) {
-        alert("Please fill in both email and password.");
-        return;
-      }
+with app.app_context():
+    db.create_all()
 
-      try {
-        const response = await fetch('http://localhost:5000/api/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, password })
-        });
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
 
-        const data = await response.json();
+    if not data.get('email') or not data.get('password'):
+        return jsonify({'message': 'Email and password required'}), 400
 
-        if (response.status === 201) {
-          alert("Signup successful! Redirecting to login...");
-          window.location.href = "login.html";
-        } else {
-          alert(data.message || "Signup failed.");
-        }
-      } catch (error) {
-        console.error("Signup error:", error);
-        alert("Server error. Please try again later.");
-      }
-    }
-  </script>
-</body>
-</html>
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({'message': 'User already exists'}), 400
+
+    hashed_pw = generate_password_hash(data['password'], method='sha256')
+    new_user = User(email=data['email'], password=hashed_pw)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User created successfully'}), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)

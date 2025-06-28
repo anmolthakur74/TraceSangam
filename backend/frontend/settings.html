@@ -8,15 +8,20 @@
   <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
 </head>
 
-<!-- Block unauthenticated access -->
-<script>
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) {
-    window.location.href = "login.html";
-  }
-</script>
-
 <body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+
+  <!-- 🔐 Block unauthenticated access -->
+  <script>
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.email) {
+        window.location.href = "login.html";
+      }
+    } catch (e) {
+      window.location.href = "login.html";
+    }
+  </script>
+
   <!-- Sidebar -->
   <aside class="w-60 bg-white border-r p-4 flex flex-col">
     <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
@@ -30,6 +35,7 @@
 
   <!-- Main Content -->
   <main class="flex-1 overflow-y-auto">
+
     <!-- Top Navbar -->
     <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
       <div class="flex gap-6 text-sm font-medium text-gray-600">
@@ -39,6 +45,7 @@
         <a href="compilance.html">Compliance</a>
         <a href="settings.html" class="text-blue-600">Settings</a>
       </div>
+
       <!-- User Dropdown -->
       <div class="relative">
         <button onclick="toggleUserMenu()" class="flex items-center gap-2 px-3 py-2 text-sm border rounded hover:bg-gray-100">
@@ -52,24 +59,29 @@
       </div>
     </div>
 
-<script>
-    function toggleUserMenu() {
-      document.getElementById("userMenu").classList.toggle("hidden");
-    }
+    <!-- JS for User Menu and Username -->
+    <script>
+      function toggleUserMenu() {
+        document.getElementById("userMenu").classList.toggle("hidden");
+      }
 
-    function logout() {
-      localStorage.removeItem("user");
-      window.location.href = "login.html";
-    }
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
 
-    // Set user name dynamically
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    if (userInfo && userInfo.email) {
-      const nameFromEmail = userInfo.email.split("@")[0];
-      document.getElementById("userName").innerText = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
-    }
-  </script>
-    </div>
+      // 👤 Set user name
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        if (userInfo && userInfo.email) {
+          const nameFromEmail = userInfo.email.split("@")[0];
+          document.getElementById("userName").innerText =
+            nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        }
+      } catch (err) {
+        document.getElementById("userName").innerText = "User";
+      }
+    </script>
 
     <!-- Page Content -->
     <div class="p-6 space-y-6">
@@ -77,7 +89,6 @@
 
       <!-- Settings Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-
         <!-- Profile Settings -->
         <div class="bg-white p-6 rounded shadow">
           <h3 class="text-lg font-semibold mb-4">👤 Profile Settings</h3>
@@ -165,8 +176,7 @@
       <div class="text-right">
         <button class="bg-blue-600 text-white px-6 py-2 rounded shadow">💾 Save Settings</button>
       </div>
-    </main>
-  </div>
-
+    </div>
+  </main>
 </body>
 </html>

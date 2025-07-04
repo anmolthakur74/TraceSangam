@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Export Logs - Tracesangam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://img.icons8.com/fluency/48/box.png" />
+</head>
+
+<body class="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
+
+  <!-- 🔐 Protect route -->
+  <script>
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.email) {
+        window.location.href = "login.html";
+      }
+    } catch (e) {
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <!-- Sidebar -->
+  <aside class="w-60 bg-white border-r p-4 flex flex-col">
+    <h1 class="text-xl font-bold text-blue-600 mb-6">🧊 Tracesangam</h1>
+    <nav class="space-y-4 flex-1">
+      <a href="index.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🏠 Dashboard</a>
+      <a href="shipment.html" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">📦 Products</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">🔎 QR/Barcode Lookup</a>
+      <a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600">⚠️ Alerts / Tamper Events</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto">
+
+    <!-- Top Navbar -->
+    <div class="flex justify-between items-center border-b px-6 py-4 bg-white">
+      <div class="flex gap-6 text-sm font-medium text-gray-600">
+        <a href="index.html">Dashboard</a>
+        <a href="shipment.html">Shipments</a>
+        <a href="export-logs.html" class="text-blue-600">Export Logs</a>
+        <a href="compilance.html">Compliance</a>
+        <a href="settings.html">Settings</a>
+      </div>
+
+      <!-- User Dropdown -->
+      <div class="relative">
+        <button onclick="toggleUserMenu()" class="flex items-center gap-2 px-3 py-2 text-sm border rounded hover:bg-gray-100">
+          👤 <span id="userName">User</span> ▾
+        </button>
+        <div id="userMenu" class="absolute right-0 mt-2 bg-white border shadow-md rounded hidden w-40 z-10">
+          <a href="settings.html" class="block px-4 py-2 hover:bg-gray-100">⚙️ Settings</a>
+          <a href="profile.html" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
+          <button onclick="logout()" class="block px-4 py-2 text-red-600 hover:bg-gray-100 w-full text-left">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS for User Menu + Username -->
+    <script>
+      function toggleUserMenu() {
+        document.getElementById("userMenu").classList.toggle("hidden");
+      }
+
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
+
+      // 👤 Set username from email
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        if (userInfo && userInfo.email) {
+          const nameFromEmail = userInfo.email.split("@")[0];
+          document.getElementById("userName").innerText =
+            nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        }
+      } catch (err) {
+        document.getElementById("userName").innerText = "User";
+      }
+    </script>
+
+    <!-- Page Content -->
+    <div class="p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Export Logs</h2>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+          <div class="text-3xl">📄</div>
+          <div>
+            <p class="text-xs text-gray-500">Total Exports</p>
+            <p class="text-lg font-semibold">3</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+          <div class="text-3xl">✅</div>
+          <div>
+            <p class="text-xs text-gray-500">Approved</p>
+            <p class="text-lg font-semibold">2</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+          <div class="text-3xl">⏰</div>
+          <div>
+            <p class="text-xs text-gray-500">Pending</p>
+            <p class="text-lg font-semibold">1</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow flex items-center gap-4">
+          <div class="text-3xl">❌</div>
+          <div>
+            <p class="text-xs text-gray-500">Rejected</p>
+            <p class="text-lg font-semibold">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter + Export Button -->
+      <div class="flex justify-between items-center">
+        <input type="text" placeholder="Search export logs..." class="px-3 py-2 border rounded-md border-gray-300 w-1/3" />
+        <div class="flex gap-4">
+          <select class="px-3 py-2 border rounded-md border-gray-300">
+            <option>All Status</option>
+            <option>Approved</option>
+            <option>Pending</option>
+            <option>Rejected</option>
+          </select>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            ⬇ Export Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Export Table -->
+      <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+        <table class="min-w-full text-sm text-left">
+          <thead class="bg-gray-100 text-gray-600 text-xs uppercase">
+            <tr>
+              <th class="px-6 py-3">Export ID</th>
+              <th class="px-6 py-3">Date</th>
+              <th class="px-6 py-3">Product</th>
+              <th class="px-6 py-3">Quantity</th>
+              <th class="px-6 py-3">Destination</th>
+              <th class="px-6 py-3">Exporter</th>
+              <th class="px-6 py-3">Status</th>
+              <th class="px-6 py-3">Documents</th>
+              <th class="px-6 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <!-- Export Rows -->
+            <!-- Your export data rows here (as shown in your code) -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
